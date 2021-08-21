@@ -1,0 +1,27 @@
+@layout('layouts/main')
+
+@section('body')
+    @!component('partials/in_page_header', {
+        title: "My amazing Skills"
+    })
+    <div class="row">
+
+        @each(skill in skills)  
+            <div class="col-md-4" style="margin-bottom: 10px">
+                <div class="card" style="width: 18rem;">
+                    <img class="skill-image" loading="lazy" src="{{ skill.skill_image_url }}" class="card-img-top" alt="...">
+                    <div class="card-body">
+                    <h5 class="card-title">{{ skill.skill_name }}</h5>
+                    <p class="card-text">
+                        {{--  {{ skill.skill_description}}  --}}
+                    </p>
+                    <a href="{{ skill.learn_more_link }}" class="link-text m-2" target="__blank">learn more</a>
+                    <a href="{{ route('portfolio_by_skill', {'skillId': skill.skill_id}) }}" class="link-text m-2">Projects</a>
+                    </div>
+                </div>
+            </div>
+        @endeach
+
+
+    </div>
+@endsection

@@ -1,0 +1,33 @@
+@layout('layouts/main')
+
+
+@section('body')
+
+  @!component('partials/in_page_header.edge', {
+    title: pageTitle
+  })
+
+  <div class="row">
+
+    @each(project in projects)  
+        <div class="col-md-4" style="margin-bottom: 10px">
+            <div class="card" style="width: 18rem;">
+                <img class="portfolio-image" loading="lazy" src="{{ project.project_image }}" class="card-img-top" alt="{{project.project_name}}">
+                <div class="card-body">
+                <h5 class="card-title">{{ project.project_name }}</h5>
+                <p class="card-text">
+                    {{ project.project_description }}
+                </p>
+                {{--  <a href="{{ service.learn_more_link }}" class="link-text m-2" target="__blank">learn more</a>  --}}
+                <a href="{{ project.project_url }}" class="link-text" target="__blank">view project</a>
+                </div>
+            </div>
+        </div>
+    @endeach
+  
+  
+  </div>
+
+  
+  
+@endsection

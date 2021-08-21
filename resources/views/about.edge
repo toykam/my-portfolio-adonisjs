@@ -1,0 +1,19 @@
+@layout('layouts/main')
+
+
+@section('body')
+  @!component('partials/in_page_header.edge', {
+    title: "About Me"
+  })
+  <div style="">
+    <p class="paragraph">Hi visitor, i am Abdulkabir Toyyib Inuolaji, a Software Developer with over 4 years experience in Software Development. A web and cross platform app developer, who fix programme bugs and also passionate about helping others in learning programming.</p>
+    <br/>
+    <p class="paragraph">I started my programming career in 2017, when I started learning HTML, CSS and JavaScript through a platform called Solo Learn. Due to lack of resources and fund i had to use my phone to write write code.</p>
+    <br/>
+    <p class="paragraph">During the journey, i have been able to work on some amazing project, ranging from simple (blog app) to complex application. To know more about these projects, see <a href="{{ route('portfolio') }}">my portfolio</a>.</p>
+    {{--  <p class="paragraph">During the journey, i learnt that to serve a page on a server it file must have been created on the server, then i became curious about about how blog sites are developed, then i kept asking myself '<b>Do the developers create a file for each post?</b>, <b>Did facebook create a profile page for each of us?</b>'.</p>
+    <br/>
+    <p class="paragraph">One day, while roaming the street of google, I came across the term <b>Dynamic Website</b>, which means a wesite that the it content is not static. Then i found the PHP language</p>  --}}
+  </div>
+
+@endsection
