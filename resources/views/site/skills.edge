@@ -1,7 +1,7 @@
-@layout('layouts/main')
+@layout('site/layouts/main')
 
 @section('body')
-    @!component('partials/in_page_header', {
+    @!component('site/partials/in_page_header', {
         title: "My amazing Skills"
     })
     <div class="row">
@@ -21,6 +21,14 @@
                 </div>
             </div>
         @endeach
+
+        @if(skills.length == 0)
+        <div class="col-md-12">
+            <div class="alert alert-info text-center">
+                We never get skill, but e go shock you when you come here after 3 months
+            </div>
+        </div>
+        @endif
 
 
     </div>

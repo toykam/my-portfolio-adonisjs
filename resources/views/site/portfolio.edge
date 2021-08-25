@@ -1,9 +1,9 @@
-@layout('layouts/main')
+@layout('site/layouts/main')
 
 
 @section('body')
 
-  @!component('partials/in_page_header.edge', {
+  @!component('site/partials/in_page_header.edge', {
     title: pageTitle
   })
 
@@ -24,6 +24,14 @@
             </div>
         </div>
     @endeach
+
+    @if(projects.length == 0)
+      <div class="col-md-12">
+        <div class="alert alert-info text-center">
+          No Projects Yet, we are just starting, but e go shock you when you come back here
+        </div>
+      </div>
+    @endif
   
   
   </div>

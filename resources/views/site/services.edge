@@ -1,8 +1,8 @@
-@layout('layouts/main')
+@layout('site/layouts/main')
 
 
 @section('body')
-@!component('partials/in_page_header', {
+@!component('site/partials/in_page_header', {
   title: "What I Can as a Service"
 })
 <p>Below are the amazing services i can offer.</p>
@@ -24,6 +24,15 @@
           </div>
       </div>
   @endeach
+
+
+  @if(services.length == 0)
+    <div class="col-md-12">
+      <div class="text-center alert alert-info">
+        Since we no get any skill, no service to offer, but, e go shock you when you come back
+      </div>
+    </div>
+  @endif
 
 
 </div>
