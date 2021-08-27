@@ -98,6 +98,7 @@ main {
 
 .skill-image {
   padding: 10px;
+  max-height: 200px;
 }
 
 .portfolio-image {
