@@ -1,0 +1,64 @@
+@layout('admin/layout/main_layout')
+
+@section('body')
+<div id="layoutSidenav_content">
+    <main>  
+        <div class="container-fluid px-4">
+            <h1 class="mt-4">Service</h1>
+            <ol class="breadcrumb mb-4">
+                <li class="breadcrumb-item active">Edit Service</li>
+            </ol>
+
+            <div class="card mb-4">
+                <div class="card-header">
+                    <i class="fas fa-table me-1"></i>
+                    Edit service
+                </div>
+                <div class="card-body">
+                    @if(flashMessages.has('msg', '').length > 0)
+                        <div class="alert alert-{{ flashMessages.get('flag') }} text-center">
+                            {{ flashMessages.get('msg') }}
+                        </div>
+                    @endif
+                    <form action="{{ route('admin_update_service', {service_id: service.service_id}) }}" method="post" enctype="multipart/form-data">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label>Service name</label>
+                                <input type="text" name="service_name" value="{{ service.service_name }}" id="service_name" class="form-control" placeholder="Service name">
+                                <div style="height: 10px"></div>
+                                <label>Service description</label>
+                                <textarea name="service_description" id="service_descriptioin" cols="30" rows="5" class="form-control" placeholder="Service description">{{ service.service_description }}</textarea>
+                            
+                            </div>
+                            
+
+                            <div class="col-md-6">
+                                <label>Service image</label>
+                                <input type="file" name="service_image" id="project_image" class="form-control" placeholder="Service image">
+                                <input type="hidden" name="service_image_prev" value="{{ service.service_image }}" id="service_image" class="form-control" placeholder="Service image">
+                                <br>
+                                <div class="text-center">
+                                    <img id="preview" src="/images/services/{{ service.service_image }}" alt="selected image" height="150px" width="300px">
+                                    {{--  <div style="height: 10px"></div>
+                                    <button class="btn btn-sm btn-primary">change picture</button>  --}}
+                                </div>
+                            </div>
+                            <div style="height: 20px"></div>
+                            <div class="col-md-12">
+                                <button class="btn btn-block btn-primary">UpdateService</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        
+    </main>
+    
+</div>
+@endsection
+
+@section('script')
+<script src="/admin/js/preview_image.js"></script>
+@endsection

@@ -1,0 +1,76 @@
+@layout('admin/layout/main_layout')
+
+@section('body')
+<div id="layoutSidenav_content">
+    <main>  
+        <div class="container-fluid px-4">
+            <h1 class="mt-4">Blogs</h1>
+            <ol class="breadcrumb mb-4">
+                <li class="breadcrumb-item active">Add New Blog</li>
+            </ol>
+
+            <div class="card mb-4">
+                <div class="card-header">
+                    <i class="fas fa-table me-1"></i>
+                    Add new blog
+                </div>
+                <div class="card-body">
+                    @if(flashMessages.has('msg', '').length > 0)
+                        <div class="alert alert-{{ flashMessages.get('flag') }} text-center">
+                            {{ flashMessages.get('msg') }}
+                        </div>
+                    @endif
+                    <form action="{{ route('admin_save_blog') }}" method="post" enctype="multipart/form-data">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label>Blog title</label>
+                                <input type="text" name="title" id="title" class="form-control" placeholder="blog title">
+                                <div style="height: 10px"></div>
+                                <label>Blog description</label>
+                                <textarea name="content" id="editor" cols="30" rows="5" class="form-control" placeholder="blog content"></textarea>
+                                {{--  <div  style="height: 300px"></div>  --}}
+                            
+                            </div>
+
+                            <div class="col-md-6">
+                                <label>Blog image</label>
+                                <input type="file" name="blog_image" id="project_image" class="form-control" placeholder="blog image">
+                                <br>
+                                <div class="text-center">
+                                    <img id="preview" src="https://www.pixsy.com/wp-content/uploads/2021/04/ben-sweet-2LowviVHZ-E-unsplash-1.jpeg" alt="selected image" style="max-width: 400px" height="150px">
+                                    
+                                </div>
+                            </div>
+                           
+
+                            
+                            <div style="height: 20px"></div>
+                            <div class="col-md-12">
+                                <button class="btn btn-block btn-primary">Save blog</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        
+    </main>
+    
+</div>
+@endsection
+
+@section('script')
+<script src="https://cdn.ckeditor.com/ckeditor5/29.1.0/classic/ckeditor.js"></script>
+
+<script src="/admin/js/preview_image.js"></script>
+
+<script>
+    ClassicEditor
+    .create( document.querySelector( '#editor' ) )
+    .catch( error => {
+        console.error( error );
+    } );
+</script>
+
+@endsection

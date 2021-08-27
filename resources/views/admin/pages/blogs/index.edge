@@ -1,0 +1,68 @@
+@layout('admin/layout/main_layout')
+
+@section('body')
+<div id="layoutSidenav_content">
+    <main>
+        <div class="container-fluid px-4">
+            <h1 class="mt-4">Blogs</h1>
+            <ol class="breadcrumb mb-4">
+                <li class="breadcrumb-item active">Blogs</li>
+            </ol>
+
+            @if(flashMessages.has('msg', '').length > 0)
+                <div class="alert alert-{{ flashMessages.get('flag') }} text-center">
+                    {{ flashMessages.get('msg') }}
+                </div>
+            @endif
+
+            <div class="card mb-4">
+                <div class="card-header">
+                    <i class="fas fa-table me-1"></i>
+                    All Blogs
+                    <span class="float-left">
+                        <a href="{{ route('admin_new_blog') }}" class="btn btn-primary btn-sm">add blog</a>
+                    </span>
+                </div>
+                <div class="card-body">
+                    <table id="datatablesSimple">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Image</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tfoot>
+                            <tr>
+                                <th>Name</th>
+                                <th>Image</th>
+                                <th>Actions</th>
+                            </tr>
+                        </tfoot>
+                        <tbody>
+                            @each(blog in blogs)
+                                <tr>
+                                    <td>{{ blog.title }}</td>
+                                    <td>
+                                        <img src="/images/blogs/{{ blog.blog_image }}" alt="{{ blog.blog_id }}" srcset="" height="50px">
+                                    </td>
+                                    <td>
+                                        <a class="btn btn-sm btn-warning" href="{{ route('admin_edit_blog', {blog_id: blog.blog_id}) }}">edit</a>
+                                        <a class="btn btn-sm btn-danger" href="{{ route('admin_delete_blog', {blog_id: blog.blog_id}) }}">delete</a>
+                                        <a class="btn btn-sm btn-primary" href="">view</a>
+                                    </td>
+                                </tr>
+                              
+                            @endeach
+                            
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        
+    </main>
+    
+</div>
+@endsection
