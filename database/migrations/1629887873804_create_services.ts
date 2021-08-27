@@ -1,4 +1,5 @@
 import BaseSchema from '@ioc:Adonis/Lucid/Schema'
+import { v4 } from "uuid";
 
 export default class CreateServices extends BaseSchema {
   protected tableName = 'services'
@@ -9,7 +10,7 @@ export default class CreateServices extends BaseSchema {
       table.string('service_name', 225).unique().notNullable()
       table.text('service_description').notNullable()
       table.string('service_image').notNullable()
-      table.uuid('service_id').unique()
+      table.uuid('service_id').unique().defaultTo(v4())
 
 
       /**

@@ -4,10 +4,10 @@
     @!component('site/partials/in_page_header', {
         title: "My amazing Skills"
     })
-    <div class="row">
+    <div class="row align-items-center">
 
         @each(skill in skills)  
-            <div class="col-md-4" style="margin-bottom: 10px">
+            <div class="col-md-3" style="margin-bottom: 10px">
                 <div class="card" style="width: 18rem;">
                     <img class="skill-image" loading="lazy" src="/images/skills/{{ skill.skill_image_url }}" class="card-img-top" alt="...">
                     <div class="card-body">

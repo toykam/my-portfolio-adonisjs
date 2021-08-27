@@ -31,6 +31,31 @@
                         <a class="nav-link" href="{{ route('admin_new_skill') }}">Add Skill</a>
                     </nav>
                 </div>
+
+
+                <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#serviceMenu" aria-expanded="false" aria-controls="serviceMenu">
+                    <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
+                    Services
+                    <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                </a>
+                <div class="collapse" id="serviceMenu" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
+                    <nav class="sb-sidenav-menu-nested nav">
+                        <a class="nav-link" href="{{ route('admin_services') }}">All Services</a>
+                        <a class="nav-link" href="{{ route('admin_new_service') }}">Add Service</a>
+                    </nav>
+                </div>
+
+                <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#blogMenu" aria-expanded="false" aria-controls="blogMenu">
+                    <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
+                    Blog
+                    <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                </a>
+                <div class="collapse" id="blogMenu" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
+                    <nav class="sb-sidenav-menu-nested nav">
+                        <a class="nav-link" href="{{ route('admin_blogs') }}">All Blog</a>
+                        <a class="nav-link" href="{{ route('admin_new_blog') }}">Add Blog Post</a>
+                    </nav>
+                </div>
                 
 
             </div>

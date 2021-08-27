@@ -33,7 +33,25 @@
                             <div style="height: 10px"></div>
                             <div class="col-md-6">
                                 <label>Project description</label>
-                                <textarea name="project_description" id="project_descriptioin" cols="30" rows="10" class="form-control" placeholder="Project description">{{ project.project_description }}</textarea>
+                                <textarea name="project_description" id="project_descriptioin" cols="30" rows="5" class="form-control" placeholder="Project description">{{ project.project_description }}</textarea>
+                           
+                                <div style="height: 10px"></div>
+                                <label for="skill_id">Select skills</label>
+                                <select name="skill_ids" id="skill_id" class="form-select" multiple size="2">
+                                    <option>Select skill</option>
+                                    @each(skill in skills)
+                                      <option {{ project.skill_ids.split(',').includes(skill.skill_id) ? 'selected' : '' }} value="{{ skill.skill_id }}">{{ skill.skill_name }}</option>
+                                    @endeach
+                                </select>
+
+                                <div style="height: 10px"></div>
+                                <label for="service_id">Select service</label>
+                                <select name="service_id" id="service_id" class="form-select">
+                                    <option>Select service</option>
+                                    @each(service in services)
+                                      <option {{ project.service_id == (service.service_id) ? 'selected' : '' }} value="{{ service.service_id }}">{{ service.service_name }}</option>
+                                    @endeach
+                                </select>
                             </div>
 
                             <div class="col-md-6">
@@ -42,14 +60,14 @@
                                 <input type="hidden" name="project_image_prev" value="{{ project.project_image }}" id="project_image" class="form-control" placeholder="Project image">
                                 <br>
                                 <div class="text-center">
-                                    <img id="preview" src="/images/projects/{{ project.project_image }}" alt="selected image" height="150px">
-                                    <div style="height: 10px"></div>
-                                    <button class="btn btn-sm btn-primary">change picture</button>
+                                    <img id="preview" src="/images/projects/{{ project.project_image }}" alt="selected image" style="max-width: 300px" height="150px">
+                                    {{--  <div style="height: 10px"></div>
+                                    <button class="btn btn-sm btn-primary">change picture</button>  --}}
                                 </div>
                             </div>
                             <div style="height: 20px"></div>
                             <div class="col-md-12">
-                                <button class="btn btn-block btn-primary">Save Project</button>
+                                <button class="btn btn-block btn-primary">Update Project</button>
                             </div>
                         </div>
                     </form>

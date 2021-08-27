@@ -18,13 +18,12 @@ h6 {
 }
 .layout {
   height: calc(100vh - 100px);
-  display: flex;
+  /* display: flex; */
 }
 .sidebar {
-  height: 100%;
   background: #00000f;
   /* background: rgba(156, 39, 176, 0.2); */
-  width: 250px;
+  width: 100%;
 }
 main {
   height: 100%;
@@ -32,6 +31,7 @@ main {
   flex: 1;
   padding: 15px 20px;
   overflow-y: scroll;
+  width: 100%;
 }
 .footer {
   padding: 10px;
@@ -44,12 +44,13 @@ main {
 }
 .menu-items {
   list-style: none;
+  text-align: center;
   padding: 10px;
 }
 .menu-item {
-  padding: 5px;
   padding: 5px 10px;
   color: #ffffff;
+  display: inline;
 }
 .menu-item a {
   text-decoration: none;
@@ -64,13 +65,12 @@ main {
 .menu-item.active {
   color: red;
   background-color: #f7f7f7;
-  padding: 5px;
   padding: 5px 10px;
 }
 
 .menu-item.active a {
-    color: red;
-  }
+  color: red;
+}
 
 .paragraph {
   font-weight: 200;
@@ -97,10 +97,17 @@ main {
 } */
 
 .skill-image {
-  height: 200px;
+  max-height: 100px;
+  padding: 10px;
 }
 
 .portfolio-image {
   height: 100px;
   background-size: contain;
+}
+
+.sidbar-profile-image {
+  background-size: cover;
+  height: 50px; max-width: 50px;
+  border-radius: 100%
 }

@@ -40,6 +40,32 @@ Route.group(() => {
             Route.get('/delete/:skill_id', `${CONTROLLER_PATH}SkillController.delete_skill`).as('admin_delete_skill')
         }).prefix('skills')
 
+        Route.group(() => {
+
+            // Project Index Page
+            Route.get('/', `${CONTROLLER_PATH}ServiceController.index`).as('admin_services')
+
+            Route.get('/new', `${CONTROLLER_PATH}ServiceController.new`).as('admin_new_service')
+
+            Route.post('/new', `${CONTROLLER_PATH}ServiceController.save_service`).as('admin_save_service')
+            Route.get('/edit/:service_id', `${CONTROLLER_PATH}ServiceController.edit_service`).as('admin_edit_service')
+            Route.post('/update/:service_id', `${CONTROLLER_PATH}ServiceController.update_service`).as('admin_update_service')
+            Route.get('/delete/:service_id', `${CONTROLLER_PATH}ServiceController.delete_service`).as('admin_delete_service')
+        }).prefix('services')
+
+        Route.group(() => {
+
+            // Project Index Page
+            Route.get('/', `${CONTROLLER_PATH}BlogController.index`).as('admin_blogs')
+
+            Route.get('/new', `${CONTROLLER_PATH}BlogController.new`).as('admin_new_blog')
+
+            Route.post('/new', `${CONTROLLER_PATH}BlogController.save_blog`).as('admin_save_blog')
+            Route.get('/edit/:blog_id', `${CONTROLLER_PATH}BlogController.edit_blog`).as('admin_edit_blog')
+            Route.post('/update/:blog_id', `${CONTROLLER_PATH}BlogController.update_blog`).as('admin_update_blog')
+            Route.get('/delete/:blog_id', `${CONTROLLER_PATH}BlogController.delete_blog`).as('admin_delete_blog')
+        }).prefix('blogs')
+
 
     }).middleware('adminAuth')
     

@@ -22,10 +22,10 @@ Route.get('/', async ({ view }) => {
   
     Route.get('/project/:serviceId', async ({ view, request }) => {
       const { serviceId } = request.params();
-      const projects = await Database.from('projects').select('*').where('project_service_id', 'like', `%${serviceId}%`);
+      const projects = await Database.from('projects').select('*').where('service_id', 'like', `%${serviceId}%`);
       const service = await Database.from('services').select('*').where('service_id', serviceId).limit(1);
       console.log(service)
-      const pageTitle = `Services I Have Renderedsite/ In ${service[0].service_name}`
+      const pageTitle = `Services I Have Rendered In ${service[0].service_name}`
       return view.render(`site/portfolio`, {projects, service: service[0], isService: true, pageTitle})
     }).as('portfolio_by_service')
   }).prefix('services')
@@ -64,7 +64,7 @@ Route.get('/', async ({ view }) => {
     Route.get('/project/:skillId', async ({ view, request }) => {
   
       const { skillId } = request.params();
-      const projects = await Database.from('projects').select('*').where('project_skill_id', 'like', `%${skillId}%`);
+      const projects = await Database.from('projects').select('*').where('skill_ids', 'like', `%${skillId}%`);
       const skill = await Database.from('skills').select('*').where('skill_id', skillId).limit(1);
       // console.log(projects)
       const pageTitle = `Amazing Projects I Have Worked On using ${skill[0].skill_name}`

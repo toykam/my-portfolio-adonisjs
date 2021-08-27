@@ -14,14 +14,19 @@ export default class ProjectController {
     }
 
     public async new({view}: HttpContextContract) {
-        return view.render('admin/pages/projects/new_project')
+        return view.render('admin/pages/projects/new_project', {
+            skills: await Database.from('skills').select('*'),
+            services: await Database.from('services').select('*')
+        })
     }
 
     public async edit_project({view, request}: HttpContextContract) {
 
         
         return view.render('admin/pages/projects/edit_project', {
-            project: await Database.from('projects').select('*').where('project_id', request.param('project_id')).then((values) => values[0])
+            project: await Database.from('projects').select('*').where('project_id', request.param('project_id')).then((values) => values[0]),
+            skills: await Database.from('skills').select('*'),
+            services: await Database.from('services').select('*')
         })
     }
 
@@ -29,14 +34,17 @@ export default class ProjectController {
         try {
 
             await request.validate(CreateProjectValidator)
-            const {project_name, project_description, project_url} = request.body()
+            const {project_name, project_description, project_url, service_id, skill_ids} = request.body()
+
+            console.log(skill_ids)
+
+            // return
     
             const project_image = request.file('project_image', {
                 size: '2mb',
                 extnames: ['jpg', 'png', 'gif'],
             })
-    
-            console.log(project_name, project_description, project_url)
+
             if (!project_image) {
                 session.flash('msg', "An image is required")
                 session.flash('flag', 'danger')
@@ -44,8 +52,6 @@ export default class ProjectController {
                 return
             }
 
-            
-    
             if (!project_image!.isValid) {
                 session.flash('msg', project_image!.errors)
                 session.flash('flag', 'danger')
@@ -53,13 +59,15 @@ export default class ProjectController {
             }
             
             await project_image!.move(Application.publicPath('images/projects/'))
-            console.log(project_image.filePath)
+            // console.log(project_image.filePath)
             await Database.table('projects').insert({
                 project_name: project_name,
                 project_description: project_description,
                 project_url: project_url,
                 project_image: project_image.fileName,
-                project_id: v4()
+                project_id: v4(),
+                skill_ids: skill_ids.join(','),
+                service_id: service_id
             })
             response.redirect().toRoute('admin_projects')
         } catch (error) {
@@ -74,7 +82,7 @@ export default class ProjectController {
         try {
 
             await request.validate(CreateProjectValidator)
-            const {project_name, project_description, project_url} = request.body()
+            const {project_name, project_description, project_url, service_id, skill_ids} = request.body()
             let imagePath = request.input('project_image_prev')
             const project_image = request.file('project_image', {
                 size: '2mb',
@@ -110,6 +118,8 @@ export default class ProjectController {
                 project_description: project_description,
                 project_url: project_url,
                 project_image: imagePath,
+                skill_ids: skill_ids.join(','),
+                service_id: service_id
             })
             response.redirect().toRoute('admin_projects')
         } catch (error) {

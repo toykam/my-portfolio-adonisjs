@@ -33,7 +33,25 @@
                             <div style="height: 10px"></div>
                             <div class="col-md-6">
                                 <label>Project description</label>
-                                <textarea name="project_description" id="project_descriptioin" cols="30" rows="10" class="form-control" placeholder="Project description"></textarea>
+                                <textarea name="project_description" id="project_descriptioin" cols="30" rows="5" class="form-control" placeholder="Project description"></textarea>
+                                <div style="height: 10px"></div>
+                                <label for="skill_id">Select skills</label>
+                                <select name="skill_ids" id="skill_id" class="form-select" multiple size="2">
+                                    <option selected>Select skill</option>
+                                    @each(skill in skills)
+                                      <option value="{{ skill.skill_id }}">{{ skill.skill_name }}</option>
+                                    @endeach
+                                </select>
+
+                                <div style="height: 10px"></div>
+                                <label for="service_id">Select service</label>
+                                <select name="service_id" id="service_id" class="form-select">
+                                    <option selected>Select service</option>
+                                    @each(service in services)
+                                      <option value="{{ service.service_id }}">{{ service.service_name }}</option>
+                                    @endeach
+                                </select>
+
                             </div>
 
                             <div class="col-md-6">
@@ -41,9 +59,8 @@
                                 <input type="file" name="project_image" id="project_image" class="form-control" placeholder="Project image">
                                 <br>
                                 <div class="text-center">
-                                    <img id="preview" src="https://www.pixsy.com/wp-content/uploads/2021/04/ben-sweet-2LowviVHZ-E-unsplash-1.jpeg" alt="selected image" width="150px" height="150px">
-                                    <div style="height: 10px"></div>
-                                    <button class="btn btn-sm btn-primary">change picture</button>
+                                    <img id="preview" src="https://www.pixsy.com/wp-content/uploads/2021/04/ben-sweet-2LowviVHZ-E-unsplash-1.jpeg" alt="selected image" style="max-width: 300px" height="150px">
+                                    
                                 </div>
                             </div>
                             <div style="height: 20px"></div>

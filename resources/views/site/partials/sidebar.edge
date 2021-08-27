@@ -1,16 +1,6 @@
-<style>
-    .sidbar-profile-image {
-        background-size: cover;
-        height: 150px; max-width: 150px;
-        border-radius: 100%
-    }
-</style>
+
 
 <div class="sidebar">
-    <div style="text-align: center; padding: 15px">
-        <img src="/images/profile-image.jpg" class="sidbar-profile-image" />
-        {{--  <img src="https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1400&q=80" class="sidbar-profile-image" />  --}}
-    </div>
     <ul class="menu-items">
         @each(menu in side_menu)
             @if (request.url().split('/').includes(menu.url))
