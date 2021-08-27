@@ -4,9 +4,9 @@
 <div id="layoutSidenav_content">
     <main>
         <div class="container-fluid px-4">
-            <h1 class="mt-4">Projects</h1>
+            <h1 class="mt-4">Skills</h1>
             <ol class="breadcrumb mb-4">
-                <li class="breadcrumb-item active">Projects</li>
+                <li class="breadcrumb-item active">Skills</li>
             </ol>
 
             @if(flashMessages.has('msg', '').length > 0)
@@ -18,9 +18,9 @@
             <div class="card mb-4">
                 <div class="card-header">
                     <i class="fas fa-table me-1"></i>
-                    All Projects
+                    All Skills
                     <span class="float-left">
-                        <a href="{{ route('admin_new_project') }}" class="btn btn-primary btn-sm">add project</a>
+                        <a href="{{ route('admin_new_skill') }}" class="btn btn-primary btn-sm">add skill</a>
                     </span>
                 </div>
                 <div class="card-body">
@@ -35,20 +35,22 @@
                         <tfoot>
                             <tr>
                                 <th>Name</th>
+                                <th>Proficiency</th>
                                 <th>Image</th>
                                 <th>Actions</th>
                             </tr>
                         </tfoot>
                         <tbody>
-                            @each(project in projects)
+                            @each(skill in skills)
                                 <tr>
-                                    <td>{{ project.project_name }}</td>
+                                    <td>{{ skill.skill_name }}</td>
+                                    <td>{{ skill.proficiency }}</td>
                                     <td>
-                                        <img src="/images/projects/{{ project.project_image }}" alt="{{ project.project_id }}" srcset="" height="50px">
+                                        <img src="/images/skills/{{ skill.skill_image_url }}" alt="{{ skill.skill_id }}" srcset="" height="50px">
                                     </td>
                                     <td>
-                                        <a class="btn btn-sm btn-warning" href="{{ route('admin_edit_project', {project_id: project.project_id}) }}">edit</a>
-                                        <a class="btn btn-sm btn-danger" href="{{ route('admin_delete_project', {project_id: project.project_id}) }}">delete</a>
+                                        <a class="btn btn-sm btn-warning" href="{{ route('admin_edit_skill', {skill_id: skill.skill_id}) }}">edit</a>
+                                        <a class="btn btn-sm btn-danger" href="{{ route('admin_delete_skill', {skill_id: skill.skill_id}) }}">delete</a>
                                         <a class="btn btn-sm btn-primary" href="">view</a>
                                     </td>
                                 </tr>

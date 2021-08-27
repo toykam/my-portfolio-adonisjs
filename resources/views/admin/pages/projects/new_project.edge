@@ -1,0 +1,67 @@
+@layout('admin/layout/main_layout')
+
+@section('body')
+<div id="layoutSidenav_content">
+    <main>  
+        <div class="container-fluid px-4">
+            <h1 class="mt-4">Projects</h1>
+            <ol class="breadcrumb mb-4">
+                <li class="breadcrumb-item active">Add New Project</li>
+            </ol>
+
+            <div class="card mb-4">
+                <div class="card-header">
+                    <i class="fas fa-table me-1"></i>
+                    Add new project
+                </div>
+                <div class="card-body">
+                    @if(flashMessages.has('msg', '').length > 0)
+                        <div class="alert alert-{{ flashMessages.get('flag') }} text-center">
+                            {{ flashMessages.get('msg') }}
+                        </div>
+                    @endif
+                    <form action="{{ route('admin_save_project') }}" method="post" enctype="multipart/form-data">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label>Project name</label>
+                                <input type="text" name="project_name" id="project_name" class="form-control" placeholder="Project name">
+                            </div>
+                            <div class="col-md-6">
+                                <label>Project url</label>
+                                <input type="text" name="project_url" id="project_url" class="form-control" placeholder="Project url">
+                            </div>
+                            <div style="height: 10px"></div>
+                            <div class="col-md-6">
+                                <label>Project description</label>
+                                <textarea name="project_description" id="project_descriptioin" cols="30" rows="10" class="form-control" placeholder="Project description"></textarea>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label>Project image</label>
+                                <input type="file" name="project_image" id="project_image" class="form-control" placeholder="Project image">
+                                <br>
+                                <div class="text-center">
+                                    <img id="preview" src="https://www.pixsy.com/wp-content/uploads/2021/04/ben-sweet-2LowviVHZ-E-unsplash-1.jpeg" alt="selected image" width="150px" height="150px">
+                                    <div style="height: 10px"></div>
+                                    <button class="btn btn-sm btn-primary">change picture</button>
+                                </div>
+                            </div>
+                            <div style="height: 20px"></div>
+                            <div class="col-md-12">
+                                <button class="btn btn-block btn-primary">Save Project</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        
+    </main>
+    
+</div>
+@endsection
+
+@section('script')
+<script src="/admin/js/preview_image.js"></script>
+@endsection

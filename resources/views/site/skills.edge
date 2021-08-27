@@ -9,9 +9,9 @@
         @each(skill in skills)  
             <div class="col-md-4" style="margin-bottom: 10px">
                 <div class="card" style="width: 18rem;">
-                    <img class="skill-image" loading="lazy" src="{{ skill.skill_image_url }}" class="card-img-top" alt="...">
+                    <img class="skill-image" loading="lazy" src="/images/skills/{{ skill.skill_image_url }}" class="card-img-top" alt="...">
                     <div class="card-body">
-                    <h5 class="card-title">{{ skill.skill_name }}</h5>
+                    <h5 class="card-title">{{ skill.skill_name }} - {{ skill.proficiency }}%</h5>
                     <p class="card-text">
                         {{--  {{ skill.skill_description}}  --}}
                     </p>

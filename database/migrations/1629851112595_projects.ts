@@ -1,4 +1,5 @@
 import BaseSchema from '@ioc:Adonis/Lucid/Schema'
+import { v4 } from "uuid";
 
 export default class Projects extends BaseSchema {
   protected tableName = 'projects'
@@ -9,7 +10,7 @@ export default class Projects extends BaseSchema {
       table.string('project_name').unique().notNullable()
       table.text('project_description').notNullable()
       table.string('project_image').notNullable()
-      table.string('project_url').unique().notNullable()
+      table.string('project_url').unique().notNullable().defaultTo(v4())
       table.uuid('project_id').unique().notNullable()
 
       /**

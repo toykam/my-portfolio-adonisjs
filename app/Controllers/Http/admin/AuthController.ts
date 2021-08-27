@@ -19,4 +19,9 @@ export default class AuthController {
             response.redirect().back()
         }
     }
+
+    public async logout({session, response}: HttpContextContract) {
+        session.clear();
+        response.redirect().toRoute('admin_login')
+    }
 }
