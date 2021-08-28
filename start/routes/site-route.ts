@@ -1,3 +1,4 @@
+import Mail from '@ioc:Adonis/Addons/Mail';
 import Route from '@ioc:Adonis/Core/Route'
 import Database from '@ioc:Adonis/Lucid/Database';
 import Ws from 'App/Services/Ws';
@@ -74,13 +75,27 @@ Route.get('/', async ({ view }) => {
 
       try {
         const data = request.only(['full_name', 'email', 'phone_number', 'message'])
-        // const { full_name, email, phone_number, message } = data
-        await Database.table('messages').returning('id').insert(data)
+        const { full_name, email, phone_number, message } = data
+        
+        await Mail.send((message) => {
+          message
+            .from('kabirtoyyib19@gmail.com', 'Abdulkabir Toyyib Inuolaji')
+            .to(email, full_name)
+            .subject("Thank You")
+            .htmlView('emails/welcome', {
+              user: { fullName: full_name },
+              url: 'https://your-app.com/verification-url',
+            })
+        }).then(async res => {
+          await Database.table('messages').returning('id').insert(data)
+        })
         session.flash('msg', 'Your message have been sent successfully')
         session.flash('flag', 'success')
         response.redirect().toRoute('contact')
       } catch(error) {
-        session.flash('msg', 'An error occurred, please try again later')
+        console.log(error)
+        session.flash('msg', `Error: An error occurred`)
+        // session.flash('msg', `Error: ${error}`)
         session.flash('flag', 'danger')
         response.redirect().back()
       }
