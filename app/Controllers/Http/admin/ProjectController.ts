@@ -3,6 +3,7 @@ import Application from "@ioc:Adonis/Core/Application";
 import CreateProjectValidator from 'App/Validators/CreateProjectValidator';
 import Database from '@ioc:Adonis/Lucid/Database';
 import { v4 } from "uuid";
+const cloudinary = require('cloudinary')
 
 
 export default class ProjectController {
@@ -39,6 +40,12 @@ export default class ProjectController {
             console.log(skill_ids)
 
             // return
+
+            cloudinary.config({ 
+                cloud_name: 'toykam', 
+                api_key: '237147821118824', 
+                api_secret: 'OTSZ-l3Bob0tSFasCJYqbKI6P1E' 
+            });
     
             const project_image = request.file('project_image', {
                 size: '2mb',

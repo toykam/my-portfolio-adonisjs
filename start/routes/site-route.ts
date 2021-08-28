@@ -1,5 +1,6 @@
 import Route from '@ioc:Adonis/Core/Route'
 import Database from '@ioc:Adonis/Lucid/Database';
+import Ws from 'App/Services/Ws';
 
 Route.get('/', async ({ view }) => {
   
@@ -46,10 +47,52 @@ Route.get('/', async ({ view }) => {
   }).prefix('portfolio')
   
   
-  
-  Route.get('/contact', async ({ view }) => {
-    return view.render(`site/contact`)
-  }).as('contact')
+  Route.group(() => {
+
+    Route.get('/', async ({ view, session }) => {
+
+      // session.clear()
+
+      console.log(session.get('chatMessages', []))
+
+      return view.render(`site/contact`, {chats: session.get('chatMessages', [{
+        message: 'hello', 'sender': 'bot'
+      }]), currentUser: session.get('userName', null)})
+    }).as('contact')
+
+    Route.post('/', async ({ request, response, session }) => {
+
+      const {userName} = request.only(['userName'])
+      console.log(userName)
+      session.put('userName', userName)
+      // return view.render(`site/contact`, {chats: [], currentUser: null})
+
+      response.redirect().toRoute('contact')
+    }).as('init-contact')
+
+    Route.post('/save-chat', async ({ request, response, session }) => {
+
+      const {message} = request.only(['message'])
+      console.log(request.all())
+      const messages = session.get('chatMessages', [])
+    
+      const msg = {
+        message, sender: session.get('userName', null)
+      }
+
+      messages.push(msg)
+
+
+      session.put('chatMessages', messages)
+      // return view.render(`site/contact`, {chats: [], currentUser: null})
+
+      Ws.io.emit('reply', {
+          message: 'This is a reply', sender: 'bot'
+      })
+
+      return response.ok({'status': true})
+    }).as('save-chat')
+  }).prefix('contact')
   
   
   
