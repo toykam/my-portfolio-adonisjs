@@ -70,6 +70,22 @@ Route.get('/', async ({ view }) => {
       response.redirect().toRoute('contact')
     }).as('init-contact')
 
+    Route.post('/save', async ({ request, response, session }) => {
+
+      try {
+        const data = request.only(['full_name', 'email', 'phone_number', 'message'])
+        // const { full_name, email, phone_number, message } = data
+        await Database.table('messages').returning('id').insert(data)
+        session.flash('msg', 'Your message have been sent successfully')
+        session.flash('flag', 'success')
+        response.redirect().toRoute('contact')
+      } catch(error) {
+        session.flash('msg', 'An error occurred, please try again later')
+        session.flash('flag', 'danger')
+        response.redirect().back()
+      }
+    }).as('send-message')
+
     Route.post('/save-chat', async ({ request, response, session }) => {
 
       const {message} = request.only(['message'])

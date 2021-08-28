@@ -7,56 +7,47 @@
   @!component('site/partials/in_page_header', {
     title: "Want to say <b>Hello</b>?"
   })
+
+  <div class="row">
+    <div class="col-md-6 offset-3">
+      @if(flashMessages.get('msg', '').length > 0)
+          <div class="alert alert-{{ flashMessages.get('flag') }} text-center">
+              {{ flashMessages.get('msg') }}
+          </div>
+      @endif
+      <form class="form row" action="{{ route('send-message') }}" method="post">
+
+        <div class="form-group col-md-12">
+          <label for="name">Full Name</label>
+          <input type="text" class="form-control" placeholder="Your full name" name="full_name">
+        </div>
+
+        <div class="form-group col-md-6">
+          <label for="email">Email</label>
+          <input type="text" class="form-control" placeholder="Your email address" name="email">
+        </div>
+
+        <div class="form-group col-md-6">
+          <label for="email">Phone number</label>
+          <input type="text" class="form-control" placeholder="Your phone number" name="phone_number">
+        </div>
+
+        <div class="form-group col-md-12">
+          <label for="email">Message</label>
+          <textarea name="message" id="message" cols="30" rows="10" class="form-control" placeholder="Your message"></textarea>
+        </div>
+        <div style="height: 20px"></div>
+        <div class="form-group col-md-12 d-grid gap-2 d-md-flex justify-content-md-end" >
+          <button class="btn btn-dark">Send Message</button>
+        </div>
+      </form>
+
+    </div>
+  </div>
   
-  @if(currentUser == null)
-    
-    <div style="display: flex; align-items: center; justify-content: center; height: 70%">
-      
-      <div style="text-align: center">
-        <form action="{{ route('init-contact') }}" method="post">
-        
-          <div class="form-group">
-            <input type="text" name="userName" class="form-control" placeholder="Your Name" id="user-name-input">
-          </div>
-          <br>
-          <button type="submit" id="start-chat-btn" class="btn btn-lg btn-dark">Start Chat</button>
-        </form>
-      </div>
-
-    </div>
-  @endif
-
-
-  @if(currentUser != null)  
-    <div id="chat-page">
-      <p>You are chatting as {{ currentUser }}</p>
-      <div id="chat-content">
-        @each(chat in chats)
-          <div class="container {{ chat.sender == 'bot' ? '' : 'darker'}}">
-            <img src="https://www.w3schools.com/w3images/bandmember.jpg" alt="Avatar">
-            <p>{{ chat.message }}</p>
-            <span class="time-right">11:00</span>
-          </div>
-        @endeach
-        
-      </div>
-
-      <div id="chat-input">
-        <input type="hidden" id="user-name" value="{{ currentUser }}">
-        <textarea class="form-control" name="chat-message-input" id="chat-message-input" rows="1" placeholder="Type your message..."></textarea>
-        <button class="btn btn-primary btn-sm" id="send-message-btn">Send Message</button>
-      </div>
-    </div>
-  @endif
-
 
 
 
 
   
-@endsection
-
-@section('script')
-  <script src="https://cdn.socket.io/4.0.1/socket.io.min.js"></script>
-  <script src="/js/chat.js"></script>
 @endsection

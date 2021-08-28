@@ -1,0 +1,62 @@
+@layout('site/layouts/main')
+
+@section('css')
+  <link rel="stylesheet" href="/css/chat.css">
+@endsection
+@section('body')
+  @!component('site/partials/in_page_header', {
+    title: "Want to say <b>Hello</b>?"
+  })
+  
+  @if(currentUser == null)
+    
+    <div style="display: flex; align-items: center; justify-content: center; height: 70%">
+      
+      <div style="text-align: center">
+        <form action="{{ route('init-contact') }}" method="post">
+        
+          <div class="form-group">
+            <input type="text" name="userName" class="form-control" placeholder="Your Name" id="user-name-input">
+          </div>
+          <br>
+          <button type="submit" id="start-chat-btn" class="btn btn-lg btn-dark">Start Chat</button>
+        </form>
+      </div>
+
+    </div>
+  @endif
+
+
+  @if(currentUser != null)  
+    <div id="chat-page">
+      <p>You are chatting as {{ currentUser }}</p>
+      <div id="chat-content">
+        @each(chat in chats)
+          <div class="container {{ chat.sender == 'bot' ? '' : 'darker'}}">
+            <img src="https://www.w3schools.com/w3images/bandmember.jpg" alt="Avatar">
+            <p>{{ chat.message }}</p>
+            <span class="time-right">11:00</span>
+          </div>
+        @endeach
+        
+      </div>
+
+      <div id="chat-input">
+        <input type="hidden" id="user-name" value="{{ currentUser }}">
+        <textarea class="form-control" name="chat-message-input" id="chat-message-input" rows="1" placeholder="Type your message..."></textarea>
+        <button class="btn btn-primary btn-sm" id="send-message-btn">Send Message</button>
+      </div>
+    </div>
+  @endif
+
+
+
+
+
+  
+@endsection
+
+@section('script')
+  <script src="https://cdn.socket.io/4.0.1/socket.io.min.js"></script>
+  <script src="/js/chat.js"></script>
+@endsection

@@ -40,7 +40,7 @@ export default class BlogController {
             if (!blog_image) {
                 session.flash('msg', "An image is required")
                 session.flash('flag', 'danger')
-                response.redirect().withQs().back()
+                response.redirect().back()
                 return
             }
 
@@ -49,7 +49,7 @@ export default class BlogController {
             if (!blog_image!.isValid) {
                 session.flash('msg', blog_image!.errors)
                 session.flash('flag', 'danger')
-                response.redirect().withQs().back()
+                response.redirect().back()
             }
             
             await blog_image!.move(Application.publicPath('images/blogs/'), {name: `${blog_id}.png`})
@@ -65,7 +65,7 @@ export default class BlogController {
             console.log(error)
             session.flash('msg', "An error occurred")
             session.flash('flag', 'danger')
-            response.redirect().withQs().back()
+            response.redirect().back()
         }
     }
 
@@ -85,14 +85,14 @@ export default class BlogController {
                 if (!blog_image) {
                     session.flash('msg', "An image is required")
                     session.flash('flag', 'danger')
-                    response.redirect().withQs().back()
+                    response.redirect().back()
                     return
                 }
     
                 if (!blog_image!.isValid) {
                     session.flash('msg', blog_image!.errors)
                     session.flash('flag', 'danger')
-                    response.redirect().withQs().back()
+                    response.redirect().back()
                 }
                 
                 await blog_image!.move(Application.publicPath('images/blogs/'))
@@ -112,7 +112,7 @@ export default class BlogController {
             console.log(error)
             session.flash('msg', "An error occurred")
             session.flash('flag', 'danger')
-            response.redirect().withQs().back()
+            response.redirect().back()
         }
     }
 
@@ -126,7 +126,7 @@ export default class BlogController {
         } catch (error) {
             session.flash('msg', error)
             session.flash('flag', 'danger')
-            response.redirect().withQs().back()
+            response.redirect().back()
         }
 
     }
