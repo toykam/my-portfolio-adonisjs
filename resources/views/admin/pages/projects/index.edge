@@ -49,7 +49,7 @@
                                 <tr>
                                     <td>{{ project.project_name }}</td>
                                     <td>
-                                        <img src="/images/projects/{{ project.project_image }}" alt="{{ project.project_id }}" srcset="" height="50px">
+                                        <img src="{{ project.project_image }}" alt="{{ project.project_id }}" srcset="" height="50px">
                                     </td>
                                     <td>
                                         <a class="btn btn-sm btn-warning" href="{{ route('admin_edit_project', {project_id: project.project_id}) }}">edit</a>

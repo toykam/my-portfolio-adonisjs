@@ -3,6 +3,7 @@ import Application from "@ioc:Adonis/Core/Application";
 import Database from '@ioc:Adonis/Lucid/Database';
 import { v4 } from "uuid";
 import CreateServiceValidator from 'App/Validators/CreateServiceValidator';
+import cloudinary from 'App/Services/CloudinaryService';
 
 
 export default class ServiceController {
@@ -52,12 +53,15 @@ export default class ServiceController {
                 response.redirect().withQs().back()
             }
             
-            await service_image!.move(Application.publicPath('images/services/'), {name: `${service_id}.png`})
-            console.log(service_image.filePath)
+            // await service_image!.move(Application.publicPath('images/services/'), {name: `${service_id}.png`})
+            // console.log(service_image.filePath)
+            const uploadRes = await cloudinary.v2.uploader.upload(service_image!.tmpPath, {
+                folder: 'services/'+service_id, overwrite: true
+            })
             await Database.table('services').insert({
                 service_name: service_name,
                 service_description: service_description,
-                service_image: service_image.fileName,
+                service_image: uploadRes.secure_url,
                 service_id
             })
             response.redirect().toRoute('admin_services')
@@ -74,6 +78,7 @@ export default class ServiceController {
 
             await request.validate(CreateServiceValidator)
             const {service_name, service_description,} = request.body()
+            const {service_id} = request.params()
             let imagePath = request.input('service_image_prev')
             const service_image = request.file('service_image', {
                 size: '2mb',
@@ -95,13 +100,16 @@ export default class ServiceController {
                     response.redirect().withQs().back()
                 }
                 
-                await service_image!.move(Application.publicPath('images/services/'))
-                console.log(service_image.filePath)
-                imagePath = service_image.fileName!
+                // await service_image!.move(Application.publicPath('images/services/'))
+                // console.log(service_image.filePath)
+                const uploadRes = await cloudinary.v2.uploader.upload(service_image!.tmpPath, {
+                    folder: 'services/'+service_id, overwrite: true
+                })
+                imagePath = uploadRes.secure_url
             }
     
             await Database.from('services').where({
-                service_id: request.param('service_id')
+                service_id
             }).update({
                 service_name: service_name,
                 service_description: service_description,

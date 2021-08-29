@@ -44,7 +44,7 @@
                                 <tr>
                                     <td>{{ blog.title }}</td>
                                     <td>
-                                        <img src="/images/blogs/{{ blog.blog_image }}" alt="{{ blog.blog_id }}" srcset="" height="50px">
+                                        <img src="{{ blog.blog_image }}" alt="{{ blog.blog_id }}" srcset="" height="50px">
                                     </td>
                                     <td>
                                         <a class="btn btn-sm btn-warning" href="{{ route('admin_edit_blog', {blog_id: blog.blog_id}) }}">edit</a>

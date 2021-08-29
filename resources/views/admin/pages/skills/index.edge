@@ -24,6 +24,11 @@
                     </span>
                 </div>
                 <div class="card-body">
+                    @if(flashMessages.has('msg', '').length > 0)
+                        <div class="alert alert-{{ flashMessages.get('flag') }} text-center">
+                            {{ flashMessages.get('msg') }}
+                        </div>
+                    @endif
                     <table id="datatablesSimple">
                         <thead>
                             <tr>
@@ -46,7 +51,7 @@
                                     <td>{{ skill.skill_name }}</td>
                                     <td>{{ skill.proficiency }}</td>
                                     <td>
-                                        <img src="/images/skills/{{ skill.skill_image_url }}" alt="{{ skill.skill_id }}" srcset="" height="50px">
+                                        <img src="{{ skill.skill_image_url }}" alt="{{ skill.skill_id }}" srcset="" height="50px">
                                     </td>
                                     <td>
                                         <a class="btn btn-sm btn-warning" href="{{ route('admin_edit_skill', {skill_id: skill.skill_id}) }}">edit</a>

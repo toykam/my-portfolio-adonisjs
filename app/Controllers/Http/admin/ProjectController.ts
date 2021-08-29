@@ -3,7 +3,7 @@ import Application from "@ioc:Adonis/Core/Application";
 import CreateProjectValidator from 'App/Validators/CreateProjectValidator';
 import Database from '@ioc:Adonis/Lucid/Database';
 import { v4 } from "uuid";
-const cloudinary = require('cloudinary')
+import cloudinary from 'App/Services/CloudinaryService';
 
 
 export default class ProjectController {
@@ -41,16 +41,12 @@ export default class ProjectController {
 
             // return
 
-            cloudinary.config({ 
-                cloud_name: 'toykam', 
-                api_key: '237147821118824', 
-                api_secret: 'OTSZ-l3Bob0tSFasCJYqbKI6P1E' 
-            });
-    
+            
             const project_image = request.file('project_image', {
                 size: '2mb',
                 extnames: ['jpg', 'png', 'gif'],
             })
+            
 
             if (!project_image) {
                 session.flash('msg', "An image is required")
@@ -64,14 +60,18 @@ export default class ProjectController {
                 session.flash('flag', 'danger')
                 response.redirect().back()
             }
+
+            const uploadRes = await cloudinary.v2.uploader.upload(project_image!.tmpPath, {
+                folder: 'projects', overwrite: true
+            })
             
-            await project_image!.move(Application.publicPath('images/projects/'))
+            // await project_image!.move(Application.publicPath('images/projects/'))
             // console.log(project_image.filePath)
             await Database.table('projects').insert({
                 project_name: project_name,
                 project_description: project_description,
                 project_url: project_url,
-                project_image: project_image.fileName,
+                project_image: uploadRes.secure_url,
                 project_id: v4(),
                 skill_ids: Array.isArray(skill_ids) ? skill_ids.join(',') : skill_ids+',',
                 service_id: service_id
@@ -115,9 +115,12 @@ export default class ProjectController {
                     response.redirect().back()
                 }
                 
-                await project_image!.move(Application.publicPath('images/projects/'))
-                console.log(project_image.filePath)
-                imagePath = project_image.fileName!
+                // await project_image!.move(Application.publicPath('images/projects/'))
+                const cloudinaryRes = await cloudinary.v2.uploader.upload(project_image.tmpPath, {
+                    folder: 'projects', overwrite: true
+                })
+                // console.log(project_image.filePath)
+                imagePath = cloudinaryRes.secure_url
             }
     
             await Database.from('projects').where({

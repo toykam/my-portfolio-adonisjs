@@ -44,7 +44,7 @@
                                 <tr>
                                     <td>{{ service.service_name }}</td>
                                     <td>
-                                        <img src="/images/services/{{ service.service_image }}" alt="{{ service.service_id }}" srcset="" height="50px">
+                                        <img src="{{ service.service_image }}" alt="{{ service.service_id }}" srcset="" height="50px">
                                     </td>
                                     <td>
                                         <a class="btn btn-sm btn-warning" href="{{ route('admin_edit_service', {service_id: service.service_id}) }}">edit</a>

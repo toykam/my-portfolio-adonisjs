@@ -3,6 +3,7 @@ import Application from "@ioc:Adonis/Core/Application";
 import Database from '@ioc:Adonis/Lucid/Database';
 import { v4 } from "uuid";
 import CreateBlogValidator from 'App/Validators/CreateBlogValidator';
+import cloudinary from 'App/Services/CloudinaryService';
 
 
 export default class BlogController {
@@ -52,12 +53,15 @@ export default class BlogController {
                 response.redirect().back()
             }
             
-            await blog_image!.move(Application.publicPath('images/blogs/'), {name: `${blog_id}.png`})
-            console.log(blog_image.filePath)
+            // await blog_image!.move(Application.publicPath('images/blogs/'), {name: `${blog_id}.png`})
+            // console.log(blog_image.filePath)
+            const uploadRes = await cloudinary.v2.uploader.upload(blog_image!.tmpPath, {
+                folder: 'blogs', overwrite: true
+            })
             await Database.table('blogs').insert({
                 title: title,
                 content: content,
-                blog_image: blog_image.fileName,
+                blog_image: uploadRes.secure_url,
                 blog_id
             })
             response.redirect().toRoute('admin_blogs')
@@ -95,9 +99,12 @@ export default class BlogController {
                     response.redirect().back()
                 }
                 
-                await blog_image!.move(Application.publicPath('images/blogs/'))
-                console.log(blog_image.filePath)
-                imagePath = blog_image.fileName!
+                // await blog_image!.move(Application.publicPath('images/blogs/'))
+                const uploadRes = await cloudinary.v2.uploader.upload(blog_image!.tmpPath, {
+                    folder: 'blogs', overwrite: true
+                })
+                // console.log(blog_image.filePath)
+                imagePath = uploadRes.secure_url
             }
     
             await Database.from('blogs').where({

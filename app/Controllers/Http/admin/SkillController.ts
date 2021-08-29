@@ -3,6 +3,7 @@ import Application from "@ioc:Adonis/Core/Application";
 import Database from '@ioc:Adonis/Lucid/Database';
 import { v4 } from "uuid";
 import CreateSkillValidator from 'App/Validators/CreateSkillValidator';
+import cloudinary from 'App/Services/CloudinaryService';
 
 
 export default class SkillController {
@@ -52,13 +53,16 @@ export default class SkillController {
                 response.redirect().withQs().back()
             }
             
-            await skill_image!.move(Application.publicPath('images/skills/'), {name: `${skill_id}.png`})
-            console.log(skill_image.filePath)
+            // await skill_image!.move(Application.publicPath('images/skills/'), {name: `${skill_id}.png`})
+            const uploadRes = await cloudinary.v2.uploader.upload(skill_image!.tmpPath, {
+                folder: 'skills/'+skill_id, overwrite: true
+            })
+            // console.log(skill_image.filePath)
             await Database.table('skills').insert({
                 skill_name: skill_name,
                 skill_description: skill_description,
                 learn_more_link: learn_more_link,
-                skill_image_url: skill_image.fileName,
+                skill_image_url: uploadRes.secure_url,
                 proficiency: proficiency,
                 position: position,
                 skill_id
@@ -77,6 +81,7 @@ export default class SkillController {
 
             await request.validate(CreateSkillValidator)
             const {skill_name, skill_description, learn_more_link, proficiency, position} = request.body()
+            const { skill_id } = request.params()
             let imagePath = request.input('skill_image_prev')
             const skill_image = request.file('skill_image', {
                 size: '2mb',
@@ -98,13 +103,16 @@ export default class SkillController {
                     response.redirect().withQs().back()
                 }
                 
-                await skill_image!.move(Application.publicPath('images/skills/'))
-                console.log(skill_image.filePath)
-                imagePath = skill_image.fileName!
+                // await skill_image!.move(Application.publicPath('images/skills/'))
+                const uploadRes = await cloudinary.v2.uploader.upload(skill_image!.tmpPath, {
+                    folder: 'skills/'+skill_id, overwrite: true
+                })
+                // console.log(skill_image.filePath)
+                imagePath = uploadRes.secure_url!
             }
     
             await Database.from('skills').where({
-                skill_id: request.param('skill_id')
+                skill_id
             }).update({
                 skill_name: skill_name,
                 skill_description: skill_description,
