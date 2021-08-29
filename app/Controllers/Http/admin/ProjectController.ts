@@ -1,5 +1,4 @@
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
-import Application from "@ioc:Adonis/Core/Application";
 import CreateProjectValidator from 'App/Validators/CreateProjectValidator';
 import Database from '@ioc:Adonis/Lucid/Database';
 import { v4 } from "uuid";
