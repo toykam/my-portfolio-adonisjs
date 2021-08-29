@@ -18,7 +18,7 @@
               <div class="card-body bg-light">
               <h5 class="card-title">{{ service.service_name }}</h5>
               <p class="card-text" title="{{ service.service_description }}">
-                  {{ service.service_description.substr(0, 35) }}...
+                  {{ service.service_description }}...
               </p>
               {{--  <a href="{{ service.learn_more_link }}" class="link-text m-2" target="__blank">learn more</a>  --}}
               <a href="{{ route('portfolio_by_service', {'serviceId': service.service_id}) }}" class="link-text">Projects</a>
