@@ -2,6 +2,7 @@ import Mail from '@ioc:Adonis/Addons/Mail';
 import Route from '@ioc:Adonis/Core/Route'
 import Database from '@ioc:Adonis/Lucid/Database';
 import Ws from 'App/Services/Ws';
+import { v4 } from 'uuid'
 
 Route.get('/', async ({ view }) => {
   
@@ -76,6 +77,7 @@ Route.get('/', async ({ view }) => {
       try {
         const data = request.only(['full_name', 'email', 'phone_number', 'message'])
         const { full_name, email, phone_number, message } = data
+        data['message_id'] = v4()
         
         await Mail.send((message) => {
           message

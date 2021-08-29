@@ -1,0 +1,60 @@
+@layout('admin/layout/main_layout')
+
+@section('body')
+<div id="layoutSidenav_content">
+    <main>
+        <div class="container-fluid px-4">
+            <h1 class="mt-4">Messages</h1>
+            <ol class="breadcrumb mb-4">
+                <li class="breadcrumb-item active">Messages</li>
+            </ol>
+
+            @if(flashMessages.has('msg', '').length > 0)
+                <div class="alert alert-{{ flashMessages.get('flag') }} text-center">
+                    {{ flashMessages.get('msg') }}
+                </div>
+            @endif
+
+            <div class="card mb-4">
+                <div class="card-header">
+                    <i class="fas fa-table me-1"></i>
+                    Message Detail
+                    {{--  <span class="float-left">
+                        <a href="{{ route('admin_new_project') }}" class="btn btn-primary btn-sm">add project</a>
+                    </span>  --}}
+                </div>
+                <div class="card-body">
+                    @if(flashMessages.has('msg', '').length > 0)
+                        <div class="alert alert-{{ flashMessages.get('flag') }} text-center">
+                            {{ flashMessages.get('msg') }}
+                        </div>
+                    @endif
+
+                    <div class="row">
+                        <div class="col-md-5">
+                            <p>Sender</p>
+                            <p>{{ message[0].full_name }}</p>
+                            <p>{{ message[0].email }}</p>
+                            <p>{{ message[0].phone_number }}</p>
+                        </div>
+                        <div class="col-md-7">
+                            <p>Message</p>
+                            <p>{{ message[0].message }}</p>
+                        </div>
+                    </div>
+
+
+                </div>
+                @if(message[0].seen == false)  
+                    <div class="card-footer">
+                        <a class="btn btn-primary btn-sm" href="{{ route('admin_message_mark_as_seen', {message_id: message[0].message_id}) }}">Mark as seen</a>
+                    </div>
+                @endif
+            </div>
+        </div>
+
+        
+    </main>
+    
+</div>
+@endsection

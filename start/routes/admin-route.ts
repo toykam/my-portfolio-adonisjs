@@ -26,6 +26,20 @@ Route.group(() => {
             Route.post('/update/:project_id', `${CONTROLLER_PATH}ProjectController.update_project`).as('admin_update_project')
             Route.get('/delete/:project_id', `${CONTROLLER_PATH}ProjectController.delete_project`).as('admin_delete_project')
         }).prefix('projects')
+        
+        Route.group(() => {
+
+            // Project Index Page
+            Route.get('/', `${CONTROLLER_PATH}MessageController.index`).as('admin_messages')
+
+            // Route.get('/new', `${CONTROLLER_PATH}MessageController.new`).as('admin_new_message')
+
+            Route.post('/reply', `${CONTROLLER_PATH}MessageController.save_message`).as('admin_save_message')
+            Route.get('/view/:message_id', `${CONTROLLER_PATH}MessageController.view_message`).as('admin_view_message')
+            Route.get('/seen/:message_id', `${CONTROLLER_PATH}MessageController.mark_as_seen`).as('admin_message_mark_as_seen')
+            // Route.get('/delete/:message_id', `${CONTROLLER_PATH}MessageController.delete_message`).as('admin_delete_message')
+        }).prefix('messages')
+
 
         Route.group(() => {
 

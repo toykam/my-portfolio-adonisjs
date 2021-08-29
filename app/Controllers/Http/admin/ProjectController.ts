@@ -73,9 +73,11 @@ export default class ProjectController {
                 project_url: project_url,
                 project_image: project_image.fileName,
                 project_id: v4(),
-                skill_ids: skill_ids.join(','),
+                skill_ids: Array.isArray(skill_ids) ? skill_ids.join(',') : skill_ids+',',
                 service_id: service_id
             })
+            session.flash('msg', "Project created successfully")
+            session.flash('flag', 'success')
             response.redirect().toRoute('admin_projects')
         } catch (error) {
             console.log(error)
@@ -125,9 +127,11 @@ export default class ProjectController {
                 project_description: project_description,
                 project_url: project_url,
                 project_image: imagePath,
-                skill_ids: skill_ids.join(','),
+                skill_ids: Array.isArray(skill_ids) ? skill_ids.join(',') : skill_ids+',',
                 service_id: service_id
             })
+            session.flash('msg', "Project updated successfully")
+            session.flash('flag', 'success')
             response.redirect().toRoute('admin_projects')
         } catch (error) {
             console.log(error)
