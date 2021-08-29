@@ -10,13 +10,15 @@
 <div class="row">
 
   @each(service in services)  
-      <div class="col-md-3" style="margin-bottom: 10px">
-          <div class="card" style="width: 18rem;">
-              <img class="skill-image" loading="lazy" src="{{ service.service_image }}" class="card-img-top" alt="...">
-              <div class="card-body">
+      <div class="col-md-3">
+          <div class="card">
+              <div class="card-img-top" style="height: 100px">
+                <img loading="lazy" src="{{ service.service_image }}" class="card-img-top skill-image" alt="...">
+              </div>
+              <div class="card-body bg-light">
               <h5 class="card-title">{{ service.service_name }}</h5>
-              <p class="card-text">
-                  {{ service.service_description}}
+              <p class="card-text" title="{{ service.service_description }}">
+                  {{ service.service_description.substr(0, 35) }}...
               </p>
               {{--  <a href="{{ service.learn_more_link }}" class="link-text m-2" target="__blank">learn more</a>  --}}
               <a href="{{ route('portfolio_by_service', {'serviceId': service.service_id}) }}" class="link-text">Projects</a>
