@@ -76,7 +76,7 @@ Route.get('/', async ({ view }) => {
 
       try {
         const data = request.only(['full_name', 'email', 'phone_number', 'message'])
-        const { full_name, email, phone_number, message } = data
+        const { full_name, email } = data
         data['message_id'] = v4()
         
         await Mail.send((message) => {
@@ -88,7 +88,7 @@ Route.get('/', async ({ view }) => {
               user: { fullName: full_name },
               url: 'https://your-app.com/verification-url',
             })
-        }).then(async res => {
+        }).then(async _ => {
           await Database.table('messages').returning('id').insert(data)
         })
         session.flash('msg', 'Your message have been sent successfully')
