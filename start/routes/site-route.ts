@@ -28,7 +28,7 @@ Route.get('/', async ({ view }) => {
       const projects = await Database.from('projects').select('*').where('service_id', 'like', `%${serviceId}%`);
       const service = await Database.from('services').select('*').where('service_id', serviceId).limit(1);
       console.log(service)
-      const pageTitle = `Services I Have Rendered In ${service[0].service_name}`
+      const pageTitle = `Services I Have Offered In ${service[0].service_name}`
       return view.render(`site/portfolio`, {projects, service: service[0], isService: true, pageTitle})
     }).as('portfolio_by_service')
   }).prefix('services')
