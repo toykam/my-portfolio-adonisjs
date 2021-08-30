@@ -10,8 +10,8 @@
   <div class="row justify-content-center">
 
     @each(project in projects)  
-        <div class="col-md-3">
-            <div class="card" style="width: 18rem;">
+        <div class="col-md-3" style="margin-bottom: 10px">
+            <div class="card">
                 <div class="card-img-top" style="height: 100px">
                   <img style="background-color: grey; padding: 5px" loading="lazy" src="{{ project.project_image }}" class="card-img-top portfolio-image" alt="{{project.project_name}}">
                 </div>
