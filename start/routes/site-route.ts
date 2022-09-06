@@ -6,19 +6,21 @@ import { v4 } from 'uuid'
 
 Route.get('/', async ({ view }) => {
   
-    return view.render('site/home', {user: 'ade'})
+    return view.render('site/home', {user: 'ade', 'title': "Home"})
   }).as("")
   
   Route.get('/about', async ({ view }) => {
-    return view.render(`site/about`)
+    return view.render(`site/about`, {'title': "About"})
   }).as('about')
   
   
   Route.group(() => {
   
     Route.get('/', async ({ view }) => {
+      const services = await Database.from('services').select('*');
       return view.render(`site/services`, {
-        services: await Database.from('services').select('*')
+        services: services, 
+        'title': `Services (${services.length})`
       })
     }).as('services')
   
@@ -29,12 +31,17 @@ Route.get('/', async ({ view }) => {
       const service = await Database.from('services').select('*').where('service_id', serviceId).limit(1);
       console.log(service)
       const pageTitle = `Services I Have Offered In ${service[0].service_name}`
-      return view.render(`site/portfolio`, {projects, service: service[0], isService: true, pageTitle})
+      return view.render(`site/portfolio`, {
+        projects, service: service[0], isService: true, pageTitle,
+        'title': service[0].service_name
+      })
     }).as('portfolio_by_service')
   }).prefix('services')
   
   Route.get('/blog', async ({ view }) => {
-    return view.render(`site/blog`)
+    return view.render(`site/blog`, {
+      'title': "Blog"
+    })
   }).as('blog')
   
   
@@ -43,7 +50,10 @@ Route.get('/', async ({ view }) => {
       const projects = await Database.from('projects').select('*');
       // console.log(projects)
       const pageTitle = "Amazing Project I Have Worked On";
-      return view.render(`site/portfolio`, {projects, skill: null, pageTitle})
+      return view.render(`site/portfolio`, {
+        projects, skill: null, pageTitle,
+        'title': "Porfolio"
+      })
     }).as('portfolio')
   
   }).prefix('portfolio')
@@ -132,8 +142,10 @@ Route.get('/', async ({ view }) => {
   Route.group( () => {
   
     Route.get('/', async ({ view }) => {
+      const skills = await Database.from('skills').select('*').orderBy('position');
       return view.render(`site/skills`, {
-        skills: await Database.from('skills').select('*').orderBy('position') 
+        skills: skills,
+        title: `Skills (${skills.length})`
       })
     }).as('skills')
   
@@ -144,7 +156,10 @@ Route.get('/', async ({ view }) => {
       const skill = await Database.from('skills').select('*').where('skill_id', skillId).limit(1);
       // console.log(projects)
       const pageTitle = `Amazing Projects I Have Worked On using ${skill[0].skill_name}`
-      return view.render(`site/portfolio`, {projects, skill: skill[0], isSkill: true, pageTitle})
+      return view.render(`site/portfolio`, {
+        projects, skill: skill[0], isSkill: true, pageTitle,
+        title: `${skill[0].skill_name}`
+      })
     }).as('portfolio_by_skill')
   
   }).prefix('skills')
