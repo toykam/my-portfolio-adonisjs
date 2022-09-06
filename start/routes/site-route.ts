@@ -67,7 +67,7 @@ Route.get('/', async ({ view }) => {
 
       console.log(session.get('chatMessages', []))
 
-      return view.render(`site/contact`, {chats: session.get('chatMessages', [{
+      return view.render(`site/contact`, {"title": "Contact", chats: session.get('chatMessages', [{
         message: 'hello', 'sender': 'bot'
       }]), currentUser: session.get('userName', null)})
     }).as('contact')
